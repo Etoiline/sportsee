@@ -1,0 +1,29 @@
+.main {
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  width:120px;
+}
+
+.icons {
+  display: flex;
+  flex-direction: column;  
+  align-items: center;
+  margin-top:200px;
+  height:340px;
+  justify-content: space-between;
+}
+
+.icons>img {
+  width:64px;
+  height:64px;
+}
+
+.copyright {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  align-self : center;
+  color:white;
+  margin-top: 80px;
+  margin-bottom: 20px;
+}

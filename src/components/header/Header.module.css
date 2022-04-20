@@ -1,0 +1,17 @@
+.header {
+  margin-left: 50px;
+}
+
+.titre {
+  font-size: 48px;
+  font-weight: 500;
+  text-align:left;
+}
+
+.titre>span {
+  color:red;
+}
+
+.congrat {
+  font-size: 18px;
+}

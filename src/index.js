@@ -9,15 +9,16 @@ import Template from './components/template/Template'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Router>
       <Routes>
       <Route path="/" element={<Template />}>
         <Route index element={<App />} />
-        <Route path="/user/:idUser" element={<Main />} />
+        <Route path="/user/:idUser" element={<Main source={'BACKEND'}/>} />
+        {/* <Route path="/user/mock/:idUser" element={<Main source={'MOCKED'}/>} /> */}
       </Route>
       </Routes>
     </Router>
-  </React.StrictMode>
+  //</React.StrictMode> 
 );
 

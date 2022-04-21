@@ -3,6 +3,8 @@ import caloriesIcon from '../../assets/calories-icon.png'
 import carbsIcon from '../../assets/carbs-icon.png'
 import fatIcon from '../../assets/fat-icon.png'
 import proteinIcon from '../../assets/protein-icon.png'
+import colMacros from './Macros.module.css'
+import { useSportseeAPI } from "../../services/sportseeAPI"
 
 const VALUE_BY_KEY = {
   calorieCount: 'Calories',
@@ -27,12 +29,14 @@ const ICON_BY_TYPE = {
 
 
 function Macros(props) {
-  //console.log('Ici Macros',props.macroValues )
+
+  const dataMacro = props.macroValues
+  
 
   return (
-    <div className='macros'>
-      {Object.entries(props.macroValues).map(([key,value])=> (
-        <MacroElement 
+    <div className={colMacros.macros}>
+      {Object.entries(dataMacro).map(([key,value])=> (
+      <MacroElement 
         key={key}
         elementName={VALUE_BY_KEY[key]} 
         elementValue={value} 

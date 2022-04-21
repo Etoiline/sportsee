@@ -1,7 +1,7 @@
 import macroElement from './MacroElement.module.css'
 
 function MacroElement(props) {
-  console.log('Ici MacroElement',props.elementName )
+  //console.log('Ici MacroElement',props.elementName )
 
   return (
     <div className={macroElement.main}>

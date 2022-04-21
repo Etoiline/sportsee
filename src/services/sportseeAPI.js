@@ -3,20 +3,24 @@ import { useEffect, useState } from "react"
 import { returnURL } from './adresses'
 
 
-export const useSportseeAPI = (user, type) => {
-  const url = returnURL(user,type)
-  //console.log('url BACKEND', url)
+export const useSportseeAPI = (user, source, type) => {
+  const url = returnURL(user,source, type)
+  console.log('url', url, source,type)
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState([]) 
   const [error, setError] = useState(undefined)
+  console.log('load async')
 
 useEffect(()=> {
+  console.log('useeffect')
   const load = async () => {
     try {
+      console.log('asdert')
       const response = await axios.get(url)
+      console.log('reponse', response)
       //const dataUser = await response.json()
       const dataUser = response.data
-      //console.log('data',dataUser)
+      console.log('dataqqq',dataUser)
       setData(dataUser)
       setLoading(false)
     } catch (err) {

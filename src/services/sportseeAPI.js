@@ -1,8 +1,11 @@
 import axios from 'axios'
 import { useEffect, useState } from "react"
+import { returnURL } from './adresses'
 
 
-export const useSportseeAPI = () => {
+export const useSportseeAPI = (user, type) => {
+  const url = returnURL(user,type)
+  //console.log('url BACKEND', url)
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState([]) 
   const [error, setError] = useState(undefined)
@@ -10,10 +13,10 @@ export const useSportseeAPI = () => {
 useEffect(()=> {
   const load = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/user/12')
+      const response = await axios.get(url)
       //const dataUser = await response.json()
       const dataUser = response.data
-      console.log('data',dataUser)
+      //console.log('data',dataUser)
       setData(dataUser)
       setLoading(false)
     } catch (err) {

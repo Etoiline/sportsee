@@ -1,16 +1,21 @@
-const USER_ID = 12
-
-export const URL_BACKEND = {
-  url_user : `http://localhost:3000/user/${USER_ID}`,
-  url_activity : `http://localhost:3000/user/${USER_ID}/activity`,
-  url_sessions : `http://localhost:3000/user/${USER_ID}/average-sessions`,
-  url_performance : `http://localhost:3000/user/${USER_ID}/performance`
+const URL_BACKEND = {
+  url : 'http://localhost:3000/user/',
+  url_user : '',
+  url_activity : '/activity',
+  url_sessions : '/average-sessions',
+  url_performance : '/performance'
 }
 
 
-export const URL_MOCKED = {
-  url_user : `../mock/${USER_ID}/user.json`,
-  url_activity : `../mock/${USER_ID}/activity.json`,
-  url_sessions : `../mock/${USER_ID}/sessions.json`,
-  url_performance : `../mock/${USER_ID}/performance.json`
+const URL_MOCKED = {
+  url : '../mock/',
+  url_user : '/user.json',
+  url_activity : '/activity.json',
+  url_sessions : '/sessions.json',
+  url_performance : '/performance.json'
+}
+
+export function returnURL(userID, type) {
+  return (URL_BACKEND['url']+userID+URL_BACKEND[type])
+
 }

@@ -7,10 +7,11 @@ import main from './Main.module.css'
 
 function Main(props) {
   const { idUser } = useParams()
-  console.log('iduser', idUser, props.source)
+  console.log("main")
+  //console.log('iduser', idUser, props.source)
   const {loading, data, error} = useSportseeAPI(idUser,props.source ,'url_user')
-  if (loading===false) {
-  console.log('return', data)}
+  // if (loading===false) {
+  // console.log('return', data)}
   return (
     <div className={main.main}>
       {!loading?<Header name={data.data.userInfos.firstName}/>:<></>}

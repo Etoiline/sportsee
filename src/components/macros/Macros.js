@@ -5,6 +5,7 @@ import fatIcon from '../../assets/fat-icon.png'
 import proteinIcon from '../../assets/protein-icon.png'
 import colMacros from './Macros.module.css'
 import { useSportseeAPI } from "../../services/sportseeAPI"
+import { useEffect, useState } from "react"
 
 const VALUE_BY_KEY = {
   calorieCount: 'Calories',
@@ -29,9 +30,20 @@ const ICON_BY_TYPE = {
 
 
 function Macros(props) {
+  //console.log('macros')
+  const {loading, data, error} = useSportseeAPI(props.id,props.source ,'url_user')
 
-  const dataMacro = props.macroValues
+  const [dataMacro, setDataMacro] = useState({})
+  useEffect(()=> {
+    if(loading===false){
+      setDataMacro(data.keyData)
+    }
+    
+  },[loading, data] ) 
+  // if (loading===false) {
+  //   console.log('macros loading ok')
   
+  //const dataMacro = data.keyData
 
   return (
     <div className={colMacros.macros}>
@@ -47,5 +59,6 @@ function Macros(props) {
       
   )
 }
+//}
 
 export default Macros

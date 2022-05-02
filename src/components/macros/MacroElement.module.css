@@ -2,8 +2,8 @@
   background-color: #FBFBFB;
   display: flex;
   height:125px;
-  margin-top: 20px;
   align-items:center;
+  border-radius: 10px;
 }
 
 .icone >img {

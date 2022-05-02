@@ -1,5 +1,4 @@
 import './App.css'
-import Main from './pages/dashboard/Main'
 import { Link } from 'react-router-dom'
 
 
@@ -12,7 +11,7 @@ function App() {
   const urlUserMock18 = '/user/mock/18'
   const txtMock = 'User mock 12'
   const txtMock18 = 'User mock 18'
-  console.log('app')
+  //console.log('app')
   return (
     <div className="App">
       <Link to={urlUser12} ><p>{txt}</p></Link>

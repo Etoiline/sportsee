@@ -8,7 +8,7 @@ const URL_BACKEND = {
 
 
 const URL_MOCKED = {
-  url : '../mock/',
+  url : process.env.PUBLIC_URL+'/mock/',
   url_user : '/user.json',
   url_activity : '/activity.json',
   url_sessions : '/sessions.json',

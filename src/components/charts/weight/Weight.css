@@ -1,0 +1,78 @@
+#histogram {
+  width:100%;
+}
+
+#histogram__chart{
+  width:100%;
+  height:300px;
+}
+
+.histogramLegend {
+  background-color: #FBFBFB;
+  display: flex;
+  width:830px;
+  justify-content: space-between;
+  border-radius: 10px 10px 0 0;
+}
+
+.histogramLegend>p {
+  font-size: 30px;
+  margin-left:20px;
+}
+
+.histogramLegend>span {
+  font-size: 15px;
+  margin-right:20px;
+  display:flex;
+  margin-top: 30px;
+}
+
+
+.histogramLegend>span>p {
+  font-size: 14px;
+  color: #74798C;
+  margin-left: 20px;
+}
+
+.histogramLegend>span>p>i {
+  margin-right: 10px;
+}
+
+.histogramLegend__weight>i{
+  color:#282D30;
+}
+
+.histogramLegend__calories>i{
+  color:#E60000;
+}
+
+
+.svg_chart{
+  display: flex;
+  background-color: #FBFBFB;
+  border-radius: 0 0 10px 10px;
+  width:830px;
+  height:300px;
+}
+
+
+.coordY {
+  font-size: 14px;
+  color: #9B9EAC;
+}
+
+
+/* #weightBars { fill: #282D30; } */
+
+#caloriesBars { fill: #E60000;
+}
+
+.chart-tooltip {
+  position : absolute;
+  background-color: #E60000;
+  color:white;
+}
+
+.rectRed {
+  background-color: #E60000;
+}

@@ -1,6 +1,7 @@
 import Header from '../../components/header/Header'
 import Macros from '../../components/macros/Macros'
 import Weight from '../../components/charts/weight/Weight'
+import Session from '../../components/charts/session/Session'
 import { useParams } from 'react-router-dom'
 import main from './Main.module.css'
 
@@ -15,7 +16,7 @@ function Main(props) {
         <div className={main.charts}>
           <Weight id={idUser} source={source} />
           <div className={main.analyze}>
-            <div className={main.sessions}><p>Sessions</p></div>
+            <Session id={idUser} source={source} />
             <div className={main.radar}><p>radar</p></div>
             <div className={main.kpi}><p>kpi</p></div>
           </div>

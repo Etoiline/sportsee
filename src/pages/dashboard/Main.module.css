@@ -18,3 +18,9 @@
 .macros {
   width:28%;
 }
+
+.analyze {
+  margin-top: 50px;
+  width:830px;
+  display: flex;
+}

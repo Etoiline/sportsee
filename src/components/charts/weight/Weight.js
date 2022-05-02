@@ -35,7 +35,7 @@ function Weight(props) {
 
   function createWeightBars(chart, minoration, majoration){
     //tooltip
-    const div = d3.select("body").append("div")
+    d3.select("body").append("div")
     .attr("class", "chart-tooltip")         
     .style("opacity", 0);
 
@@ -232,11 +232,6 @@ function Weight(props) {
   }
 
 
-
-    //fonction de remplissage des ordonnées
-    const yScale = d3.scaleLinear()
-     .domain ([d3.min(datasetWeight)*minoration,d3.max(datasetWeight)*majoration])
-     .range([0,200])
 
       // Ajout des bars en utilisant les données
      createWeightBars(chart, minoration, majoration)

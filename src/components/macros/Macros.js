@@ -4,8 +4,9 @@ import carbsIcon from '../../assets/carbs-icon.png'
 import fatIcon from '../../assets/fat-icon.png'
 import proteinIcon from '../../assets/protein-icon.png'
 import colMacros from './Macros.module.css'
-import { useSportseeAPI } from "../../services/sportseeAPI"
-import { useEffect, useState } from "react"
+import { useSportSeeAPIMain } from "../../services/sportseeAPI"
+import { useEffect, useState, useContext } from "react"
+import { SrcContext } from '../../services/SrcProvider'
 
 const VALUE_BY_KEY = {
   calorieCount: 'Calories',
@@ -31,34 +32,33 @@ const ICON_BY_TYPE = {
 
 function Macros(props) {
   //console.log('macros')
-  const {loading, data, error} = useSportseeAPI(props.id ,'url_user')
+  // const context = useContext(SrcContext)
+  // const source = context.dataSource
+  // const {loading, data, error} = useSportSeeAPIMain(props.id, source)
 
-  const [dataMacro, setDataMacro] = useState({})
-  useEffect(()=> {
-    if(loading===false){
-      setDataMacro(data.keyData)
-    }
-    
-  },[loading, data] ) 
-  // if (loading===false) {
-  //   console.log('macros loading ok')
-  
-  //const dataMacro = data.keyData
+  // const [dataMacro, setDataMacro] = useState({})
+  // useEffect(()=> {
+  //   if(loading===false){
+  //     setDataMacro(data.keyData)
+  //   }
+
+  // },[loading, data] ) 
+
 
   return (
     <div className={colMacros.macros}>
-      {Object.entries(dataMacro).map(([key,value])=> (
-      <MacroElement 
-        key={key}
-        elementName={VALUE_BY_KEY[key]} 
-        elementValue={value} 
-        elementUnit={UNIT_BY_TYPE[key]} 
-        elementIcon = {ICON_BY_TYPE[key]}/>
-))}
+      {Object.entries(props.dataMacro).map(([key, value]) => (
+        <MacroElement
+          key={key}
+          elementName={VALUE_BY_KEY[key]}
+          elementValue={value}
+          elementUnit={UNIT_BY_TYPE[key]}
+          elementIcon={ICON_BY_TYPE[key]} />
+      ))}
     </div>
-      
+
   )
 }
-//}
+
 
 export default Macros

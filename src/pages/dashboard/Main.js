@@ -4,15 +4,18 @@ import Weight from '../../components/charts/weight/Weight'
 import Session from '../../components/charts/session/Session'
 import Radar from '../../components/charts/radar/Radar'
 import Kpi from '../../components/charts/kpi/Kpi'
-import { useSportseeAPI } from '../../services/sportseeAPI'
+import { useSportSeeAPIMain } from '../../services/sportseeAPI'
 import { useParams } from 'react-router-dom'
 import main from './Main.module.css'
-// import SrcProvider from '../../services/SrcProvider'
+import { useContext } from 'react'
+import { SrcContext } from '../../services/SrcProvider'
 
 
 function Main(props) {
   const { idUser } = useParams()
-  const {loading, data, error} = useSportseeAPI(12 ,'url_user')
+  const context = useContext(SrcContext)
+  const source = context.dataSource
+  const {loading, data, error} = useSportSeeAPIMain(idUser,source)
 
   const ShowData = () => {
     if(error){
@@ -20,8 +23,7 @@ function Main(props) {
     return <div>ERREUR</div>
   }
   else return (<div className={main.main}>
-    {/* <SrcProvider> */}
-    <Header id={idUser} />
+    {!loading?<Header name={data.userInfos.firstName} />:<></>}
     <div className={main.data}>
       <div className={main.charts}>
         <Weight id={idUser} />
@@ -32,9 +34,8 @@ function Main(props) {
         </div>
 
       </div>
-    <Macros id={idUser}/>
+    {!loading?<Macros dataMacro={data.keyData}/>:<></>}
     </div>
-    {/* </SrcProvider> */}
   </div>)
   }
 

@@ -9,7 +9,7 @@ import { createContext } from "react"
  * d'autres composants par la suite via le `Consumer`
  */
 export const SrcContext = createContext({
-  dataSource : 'MOCKED'
+  dataSource : ''
 });
 
 /**
@@ -18,7 +18,7 @@ export const SrcContext = createContext({
  * dans le composant éponyme. De cette façon, ses values
  * seront accessibles de manière globale via le `Consumer`
  */
-function SrcProvider () {
+function SrcProvider (props) {
 
 
     return (
@@ -26,8 +26,8 @@ function SrcProvider () {
        * la propriété value est très importante ici, elle rend
        * le contenu du state disponible aux `Consumers` de l'application
        */
-      <SrcContext.Provider value={this.dataSource}>
-        {this.props.children}
+      <SrcContext.Provider value={{dataSource:'MOCKED'}}>
+        {props.children}
       </SrcContext.Provider>
     );
 

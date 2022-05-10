@@ -1,11 +1,14 @@
 import * as d3 from 'd3'
-import { useSportseeAPI } from '../../../services/sportseeAPI';
+import { useSportSeeAPIActivity } from '../../../services/sportseeAPI';
 import  './Weight.css'
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
+import { SrcContext } from '../../../services/SrcProvider';
 
 function Weight(props) {
   //console.log("weight")
-  const {loading, data, error} = useSportseeAPI(props.id ,'url_activity')
+  const context = useContext(SrcContext)
+  const source = context.dataSource
+  const {loading, data, error} = useSportSeeAPIActivity(props.id, source)
 
   const [datasetCalories, setDatasetCalories] = useState([])
 
@@ -22,7 +25,6 @@ function Weight(props) {
     }
     
   },[loading, data] ) 
-
 
   useEffect(()=> {
     if (datasetCalories.length>0 && datasetWeight.length>0){

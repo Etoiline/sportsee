@@ -1,11 +1,10 @@
 import * as d3 from 'd3'
-import { useSportseeAPI } from '../../../services/sportseeAPI';
 import  radarCss from './Radar.module.css'
 import { useEffect, useState } from "react"
 
 function Radar(props) {
 
-  document.getElementById('radar_chart').innerHTML=''
+  //document.getElementById('radar_chart').innerHTML=''
  let data = [80,120,140,50,200,90]
  
 

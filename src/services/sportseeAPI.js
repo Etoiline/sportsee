@@ -3,11 +3,14 @@ import { useEffect, useState } from "react"
 import { returnURL } from './adresses'
 
 
-
-const source = 'MOCKED'
+///////////////Créer un hokk par composant////////////////
+// const source = 'MOCKED'
 //const source='BACKEND'
 
-export const useSportseeAPI = (user, type) => {
+
+
+
+export const useSportseeAPI = (user,source, type) => {
   const url = returnURL(user,source, type)
   //console.log('url', url, source,type)
   const [loading, setLoading] = useState(true)
@@ -42,6 +45,140 @@ useEffect(()=> {
   }
 load()
 }, [url])
+
+
+  return {
+    loading,
+    data,
+    error
+  }
+}
+
+
+
+/**
+         * Return main user data
+         * 
+         * @param user : user id
+         * @param source : source of data (MOCKED or BACKEND)
+         * 
+         * @return loading : indicates loading status
+         * @return data : object containing id user, keyData object (macros data), user score and user info 
+         * @return error : indicates any errors
+         *    
+         */
+ export const useSportSeeAPIMain = (user, source) => {
+  const url = returnURL(user, source, 'url_user')
+  const [loading, setLoading] = useState(true)
+  const [data, setData] = useState([])
+  const [error, setError] = useState(undefined)
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const response = await axios.get(url)
+        let dataUser = (source === 'BACKEND') ? response.data.data : response.data
+        setData(dataUser)
+        setLoading(false)
+      } catch (err) {
+        setError(err)
+        setLoading(false)
+      }
+    }
+    load()
+  }, [url])
+
+
+  return {
+    loading,
+    data,
+    error
+  }
+}
+
+
+
+
+
+
+
+
+
+/**
+         * Return sessions data
+         * 
+         * @param user : user id
+         * @param source : source of data (MOCKED or BACKEND)
+         * 
+         * @return loading : indicates loading status
+         * @return data : array containing for each day the duration of the session
+         * @return error : indicates any errors
+         *    
+         */
+export const useSportSeeAPISession = (user, source) => {
+  const url = returnURL(user, source, 'url_sessions')
+  const [loading, setLoading] = useState(true)
+  const [data, setData] = useState([])
+  const [error, setError] = useState(undefined)
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const response = await axios.get(url)
+        let dataUser = (source === 'BACKEND') ? response.data.data : response.data
+        setData(dataUser)
+        setLoading(false)
+      } catch (err) {
+        setError(err)
+        setLoading(false)
+      }
+    }
+    load()
+  }, [url])
+
+
+  return {
+    loading,
+    data,
+    error
+  }
+}
+
+
+
+
+
+/**
+         * Return data user activity
+         * 
+         * @param user : user id
+         * @param source : source of data (MOCKED or BACKEND)
+         * 
+         * @return loading : indicates loading status
+         * @return data : object containing id user and an array with weight and calories for the week 
+         * @return error : indicates any errors
+         *    
+         */
+ export const useSportSeeAPIActivity = (user, source) => {
+  const url = returnURL(user, source, 'url_activity')
+  const [loading, setLoading] = useState(true)
+  const [data, setData] = useState([])
+  const [error, setError] = useState(undefined)
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const response = await axios.get(url)
+        let dataUser = (source === 'BACKEND') ? response.data.data : response.data
+        setData(dataUser)
+        setLoading(false)
+      } catch (err) {
+        setError(err)
+        setLoading(false)
+      }
+    }
+    load()
+  }, [url])
 
 
   return {

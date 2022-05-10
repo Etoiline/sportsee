@@ -1,5 +1,11 @@
 import './App.css'
+import React, {createContext} from 'react';
 import { Link } from 'react-router-dom'
+
+
+// export const SrcContext = createContext({
+//   dataSource : 'MOCKED'
+// });
 
 
 function App() {
@@ -16,9 +22,8 @@ function App() {
     <div className="App">
       <Link to={urlUser12} ><p>{txt}</p></Link>
       <Link to={urlUser18}>{txt18}</Link>
-      <Link to={urlUserMock12} ><p>{txtMock}</p></Link>
-      <Link to={urlUserMock18}>{txtMock18}</Link>
-    {/* <Main /> */}
+      {/* <Link to={urlUserMock12} ><p>{txtMock}</p></Link>
+      <Link to={urlUserMock18}>{txtMock18}</Link> */}
     </div>
   );
 }

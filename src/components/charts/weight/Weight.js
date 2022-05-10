@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 
 function Weight(props) {
   //console.log("weight")
-  const {loading, data, error} = useSportseeAPI(props.id,props.source ,'url_activity')
+  const {loading, data, error} = useSportseeAPI(props.id ,'url_activity')
 
   const [datasetCalories, setDatasetCalories] = useState([])
 
@@ -88,19 +88,19 @@ function Weight(props) {
   }
 
 
-  function setTooltip () {
-    for (let i=0;i<datasetCalories.length;i++){
-      const tooltip = d3.select('#jour'+i+'>div')
-      const datasetWeightTxt = tooltip.append('svg:text')
-      datasetWeightTxt.attr("x", 120+i*110)
-            .attr("y", 40)
-            .style("text-anchor", "middle")
-            .attr("class", "d3 text-xs text-white fill-current")
-      datasetWeightTxt.text(datasetWeight[i] + "kg")
-      const datasetCaloriestxt = tooltip.append('svg:text')
-      datasetCaloriestxt.text(datasetCalories[i] + "kCal")
-    }
-  }
+  // function setTooltip () {
+  //   for (let i=0;i<datasetCalories.length;i++){
+  //     const tooltip = d3.select('#jour'+i+'>div')
+  //     const datasetWeightTxt = tooltip.append('svg:text')
+  //     datasetWeightTxt.attr("x", 120+i*110)
+  //           .attr("y", 40)
+  //           .style("text-anchor", "middle")
+  //           .attr("class", "d3 text-xs text-white fill-current")
+  //     datasetWeightTxt.text(datasetWeight[i] + "kg")
+  //     const datasetCaloriestxt = tooltip.append('svg:text')
+  //     datasetCaloriestxt.text(datasetCalories[i] + "kCal")
+  //   }
+  // }
 
 
 
@@ -139,7 +139,7 @@ function Weight(props) {
     // infos bubble : red rect + calories + weight
     group.append("svg:rect")
         .attr("x", 100+index*110)
-        .attr("y", 21)
+        .attr("y", 6)
         .attr("width", 70)
         .attr("height", 95)
         .attr("fill", "#E60000")
@@ -147,13 +147,13 @@ function Weight(props) {
         .attr("opacity", "0")
     group.append("svg:text")
         .attr("x", 110+index*110)
-        .attr("y", 50)
+        .attr("y", 35)
         .attr("fill", "white")
         .text(datasetWeight[index] + "Kg")  
         .attr("opacity", "0")
     group.append("svg:text")
         .attr("x", 105+index*110)
-        .attr("y", 100)
+        .attr("y", 85)
         .attr("fill", "white")
         .text(calory + "Kcal")      
         .attr("opacity", "0")
@@ -184,16 +184,19 @@ function Weight(props) {
             .attr("x", 780)
             .attr("y", 150)
             .attr("class", "coordY")
+            .attr("fill", "#9B9EAC")
             .text(Math.round((d3.min(datasetWeight)*minoration + d3.max(datasetWeight)*majoration) / 2))
     chart.append("svg:text")
             .attr("x", 780)
             .attr("y", 50)
             .attr("class", "coordY")
+            .attr("fill", "#9B9EAC")
             .text(Math.round(d3.max(datasetWeight)*majoration))
     chart.append("svg:text")
             .attr("x", 780)
             .attr("y", 250)
             .attr("class", "coordY")
+            .attr("fill", "#9B9EAC")
             .text(Math.round(d3.min(datasetWeight)*minoration))
     
     //lignes horizontales
@@ -202,21 +205,21 @@ function Weight(props) {
             .attr("y1", 50)
             .attr("x2", 720)
             .attr("y2", 50)               
-            .attr("stroke", "black")
+            .attr("stroke", "#DEDEDE")
             .attr("stroke-dasharray", "4")
     chart.append("line")
             .attr("x1", 20)
             .attr("y1", 150)
             .attr("x2", 720)
             .attr("y2", 150)               
-            .attr("stroke", "black")
+            .attr("stroke", "#DEDEDE")
             .attr("stroke-dasharray", "4")
     chart.append("line")
             .attr("x1", 20)
             .attr("y1", 250)
             .attr("x2", 720)
             .attr("y2", 250)               
-            .attr("stroke", "black")
+            .attr("stroke", "#DEDEDE")
 
 
     //fonction de remplissage des abscisses
@@ -228,6 +231,7 @@ function Weight(props) {
       .attr("x", xScale(i)+30)
       .attr("y", 280)
       .attr("class", "coordX")
+      .attr("fill", "#9B9EAC")
       .text(i)
   }
 
@@ -238,20 +242,9 @@ function Weight(props) {
      createCaloriesBars(chart, minoration, majoration)
      
      //remplissage des tooltips
-     setTooltip()
+     //setTooltip()
      displayTooltip(chart)
      
-     
-     
-     
-     // let intr = d3.interpolate(41, 550)
-      //   console.log("Type of returned function is: ",
-      //           typeof (intr));
-      //           console.log(intr(0))
-      //           console.log(intr(1))
-      //   console.log(intr(2))
-      //   console.log(intr(0.5))
-      //   console.log(intr(0.4))
 
 
    

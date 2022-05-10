@@ -3,7 +3,11 @@ import { useEffect, useState } from "react"
 import { returnURL } from './adresses'
 
 
-export const useSportseeAPI = (user, source, type) => {
+
+const source = 'MOCKED'
+//const source='BACKEND'
+
+export const useSportseeAPI = (user, type) => {
   const url = returnURL(user,source, type)
   //console.log('url', url, source,type)
   const [loading, setLoading] = useState(true)

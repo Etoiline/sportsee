@@ -31,7 +31,7 @@ const ICON_BY_TYPE = {
 
 function Macros(props) {
   //console.log('macros')
-  const {loading, data, error} = useSportseeAPI(props.id,props.source ,'url_user')
+  const {loading, data, error} = useSportseeAPI(props.id ,'url_user')
 
   const [dataMacro, setDataMacro] = useState({})
   useEffect(()=> {

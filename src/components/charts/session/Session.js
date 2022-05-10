@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 
 function Session(props) {
   //console.log("weight")
-  const {loading, data, error} = useSportseeAPI(props.id,props.source ,'url_sessions')
+  const {loading, data, error} = useSportseeAPI(props.id ,'url_sessions')
 
   const [dataSession, setDataSession] = useState([])
 
@@ -29,14 +29,31 @@ function Session(props) {
 
     //on ajoute deux éléments : un au début et un à la fin 
     //ils seront en dehors du graphique mais permettront une ligne continue (avant j1 et après j7)
-    
-    console.log('allSession', allSessions)
+    const prevDuration = 2*allSessions[0]-allSessions[1]
+    const nextDuration = 2*allSessions[allSessions.length-1]-allSessions[allSessions.length-2]
+    let extrasSessions = []
+    extrasSessions.push(prevDuration)
+    extrasSessions = extrasSessions.concat(allSessions)
+    extrasSessions.push(nextDuration)
 
     let chart = d3.select("#session__chart")
       .append("svg")
      .attr('class', 'svg_session_chart')
-     .attr ('height','180px')
-     .attr ('width', '268px' )
+     .attr ('height','280px')
+     .attr ('width', '266px' )
+
+
+     //title
+     chart.append('text')
+        .attr('x', 100)
+        .attr('y', 50)
+        .attr('width', '200px')
+        .attr('fill', 'white')
+      .attr('opacity', "50.4%")
+        .attr('text-anchor', 'middle')
+        .style('font-family', 'Roboto')
+        .style('font-size', 15)
+        .text('Durée moyenne des sessions')
 
     //fonction de remplissage des abscisses
     const xScale = d3.scaleLinear()
@@ -46,7 +63,7 @@ function Session(props) {
     for (let i =1;i<8;i++){
       chart.append("svg:text")
       .attr("x", xScale(i)+20)
-      .attr("y", 150)
+      .attr("y", 250)
       .text(abscisse[i-1])
       .attr('fill', 'white')
       .attr('opacity', "50.4%")
@@ -57,32 +74,91 @@ function Session(props) {
     .domain([0, Math.max(...dataSession.map(elt => elt.sessionLength))])
     .range([ 0, 100 ])
 
-    // Add the dot
-    chart.append('g')
-        .selectAll("dot")
-        .data(allSessions)
-        .enter()
-        .append("circle")
-        .attr("cx",  (d,i) => xScale(i+1)+28 )
-        .attr("cy", (d) =>  120-yScale(d) )
-        .attr("r", 2)
-        .style("fill", "#000")
-
     //add the line
         var line = d3.line()
-        .x((d,i) => xScale(i+1)+28) 
-        .y((d) =>  120-yScale(d) ) 
+        .x((d,i) => xScale(i)+28) 
+        .y((d) =>  220-yScale(d) ) 
         .curve(d3.curveMonotoneX)
         
         chart.append("path")
-        .datum(allSessions) 
+        .datum(extrasSessions) 
         .attr("class", "line") 
-        //.attr("transform", "translate(" + 100 + "," + 100 + ")")
         .attr("d", line)
         .style("fill", "none")
-        .style("stroke", "#CC0000")
+        .style("stroke", "#FFF")
+        .style("opacity", "0.5")
         .style("stroke-width", "2");
 
+    // Add the dot and bubbles
+      for (let index=1;index<extrasSessions.length-1;index ++){
+        let duration = extrasSessions[index]
+        let decalage = 0 //permet d'afficher la durée à droite pour la dernière valeur (sinon dépasse du cadre)
+        if(index===extrasSessions.length-2){
+          decalage = 50
+        }
+
+      let group = chart.append("g")
+            .attr("id", "session" + index)
+            .attr("class", "linear_dots")
+        group.append("svg:rect")
+            .attr("class", "session_on_hover")
+            .attr("x", xScale(index)+28 )
+            .attr("y", 0)
+            .attr("width", "100%")
+            .attr("height", 300)
+            .attr("fill", "#000")
+            .attr("opacity", "0")
+        group.append("svg:rect")
+        .attr("x", xScale(index)+34-decalage)
+        .attr("y",  220-yScale(duration)-35)
+        .attr("width", 40)
+        .attr("height", 25)
+        .attr("fill", "#FFF")
+        .attr("opacity", "0")
+        group.append("svg:text")
+            .attr("x", xScale(index)+54-decalage)
+            .attr("y",  220-yScale(duration)-20)
+            .style("text-anchor", "middle")
+            .style("font-size", "8px")
+            .text(duration + "min") 
+            .attr("opacity", "0")
+        group.append("svg:circle")
+            .attr("cx", xScale(index)+28 )
+            .attr("cy",  220-yScale(duration))
+            .attr("r", 3) 
+            .attr("stroke-width", "4")
+            .style("fill", "#FFF")
+            .style("stroke", "#FFFFFF80")
+            .attr("opacity", "0")
+        // hitbox
+         chart.append("svg:rect")
+                 .attr("x", xScale(index)+8 )
+                 .attr("y", 0)
+                 .attr("width", 41)
+                 .attr("height", 300)
+                 .attr("opacity", "0")
+                // make it appear on hover + make the infos appears
+                .on("mouseover", function () {
+                    d3.selectAll(`#session${index} > *`).transition()
+                        .attr("opacity", "1")
+                    d3.selectAll(`#session${index} > .session_on_hover`).transition()
+                        .attr("opacity", "0.1")
+                })
+                .on("mouseout", function () {
+                    d3.selectAll(`#session${index} > *`).transition()
+                        .attr("opacity", "0")
+                })
+    }
+    // chart.append('g')
+    // .attr("class", "linear_dots")
+    //     .selectAll("dot")
+    //     .data(extrasSessions)
+    //     .enter()
+    //     .append("circle")
+    //     .attr("cx",  (d,i) => xScale(i)+28 )
+    //     .attr("cy", (d) =>  220-yScale(d) )
+    //     .attr("r", 2)
+    //     .style("fill", "#000")
 
 
 
@@ -90,9 +166,8 @@ function Session(props) {
 
   return (
     <div className={sessionCss.main}>
-      <p>Durée moyenne des sessions</p>
       <div id="session__chart">
-        dlnljdnsèlsfggèl
+        
       </div>
 
     </div>

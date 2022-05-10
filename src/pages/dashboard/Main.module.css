@@ -7,13 +7,11 @@
 .data{
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   margin-top: 80px;
   
 }
 
-.charts {
-  width:70%;
-}
 
 .macros {
   width:28%;
@@ -23,4 +21,5 @@
   margin-top: 50px;
   width:830px;
   display: flex;
+  justify-content: space-between;
 }

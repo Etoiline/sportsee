@@ -8,23 +8,23 @@ function Weight(props) {
   //console.log("weight")
   const context = useContext(SrcContext)
   const source = context.dataSource
-  const {loading, data, error} = useSportSeeAPIActivity(props.id, source)
+  const {loadingActivity, dataActivity, errorActivity} = useSportSeeAPIActivity(props.id, source)
 
   const [datasetCalories, setDatasetCalories] = useState([])
 
   const [datasetWeight, setDatasetWeight]= useState([])
 
   useEffect(()=> {
-    if(loading===false){
-      setDatasetWeight(data.sessions.map (dataWeight => {
+    if(loadingActivity===false){
+      setDatasetWeight(dataActivity.sessions.map (dataWeight => {
         return (dataWeight.kilogram)
       }))
-      setDatasetCalories(data.sessions.map (dataCalories => {
+      setDatasetCalories(dataActivity.sessions.map (dataCalories => {
         return (dataCalories.calories)
       }))
     }
     
-  },[loading, data] ) 
+  },[loadingActivity, dataActivity] ) 
 
   useEffect(()=> {
     if (datasetCalories.length>0 && datasetWeight.length>0){

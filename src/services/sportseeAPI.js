@@ -62,16 +62,16 @@ load()
          * @param user : user id
          * @param source : source of data (MOCKED or BACKEND)
          * 
-         * @return loading : indicates loading status
-         * @return data : object containing id user, keyData object (macros data), user score and user info 
-         * @return error : indicates any errors
+         * @return loadingMain : indicates loading status
+         * @return dataMain : object containing id user, keyData object (macros data), user score and user info 
+         * @return errorMain : indicates any errors
          *    
          */
  export const useSportSeeAPIMain = (user, source) => {
   const url = returnURL(user, source, 'url_user')
-  const [loading, setLoading] = useState(true)
-  const [data, setData] = useState([])
-  const [error, setError] = useState(undefined)
+  const [loadingMain, setLoading] = useState(true)
+  const [dataMain, setData] = useState([])
+  const [errorMain, setError] = useState(undefined)
 
   useEffect(() => {
     const load = async () => {
@@ -90,9 +90,9 @@ load()
 
 
   return {
-    loading,
-    data,
-    error
+    loadingMain,
+    dataMain,
+    errorMain
   }
 }
 
@@ -117,7 +117,7 @@ load()
          */
 export const useSportSeeAPISession = (user, source) => {
   const url = returnURL(user, source, 'url_sessions')
-  const [loading, setLoading] = useState(true)
+  const [loadingSession, setLoading] = useState(true)
   const [data, setData] = useState([])
   const [error, setError] = useState(undefined)
 
@@ -138,7 +138,7 @@ export const useSportSeeAPISession = (user, source) => {
 
 
   return {
-    loading,
+    loadingSession,
     data,
     error
   }
@@ -161,9 +161,9 @@ export const useSportSeeAPISession = (user, source) => {
          */
  export const useSportSeeAPIActivity = (user, source) => {
   const url = returnURL(user, source, 'url_activity')
-  const [loading, setLoading] = useState(true)
-  const [data, setData] = useState([])
-  const [error, setError] = useState(undefined)
+  const [loadingActivity, setLoading] = useState(true)
+  const [dataActivity, setData] = useState([])
+  const [errorActivity, setError] = useState(undefined)
 
   useEffect(() => {
     const load = async () => {
@@ -182,8 +182,8 @@ export const useSportSeeAPISession = (user, source) => {
 
 
   return {
-    loading,
-    data,
-    error
+    loadingActivity,
+    dataActivity,
+    errorActivity
   }
 }

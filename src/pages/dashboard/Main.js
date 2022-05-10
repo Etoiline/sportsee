@@ -15,15 +15,15 @@ function Main(props) {
   const { idUser } = useParams()
   const context = useContext(SrcContext)
   const source = context.dataSource
-  const {loading, data, error} = useSportSeeAPIMain(idUser,source)
+  const {loadingMain, dataMain, errorMain} = useSportSeeAPIMain(idUser,source)
 
   const ShowData = () => {
-    if(error){
-      console.log(error)
+    if(errorMain){
+      console.log(errorMain)
     return <div>ERREUR</div>
   }
   else return (<div className={main.main}>
-    {!loading?<Header name={data.userInfos.firstName} />:<></>}
+    {!loadingMain?<Header name={dataMain.userInfos.firstName} />:<></>}
     <div className={main.data}>
       <div className={main.charts}>
         <Weight id={idUser} />
@@ -34,14 +34,14 @@ function Main(props) {
         </div>
 
       </div>
-    {!loading?<Macros dataMacro={data.keyData}/>:<></>}
+    {!loadingMain?<Macros dataMacro={dataMain.keyData}/>:<></>}
     </div>
   </div>)
   }
 
   return (
     <div>
-        {!loading ? <ShowData /> : <></>}
+        {!loadingMain ? <ShowData /> : <></>}
     </div>
       
   )

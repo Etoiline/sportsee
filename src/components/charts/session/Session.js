@@ -8,22 +8,24 @@ function Session(props) {
   //console.log("weight")
   const context = useContext(SrcContext)
   const source = context.dataSource
-  const { loading, data, error } = useSportSeeAPISession(props.id, source)
+  const { loadingSession, data, error } = useSportSeeAPISession(props.id, source)
 
   const [dataSession, setDataSession] = useState([])
 
 
   useEffect(() => {
-    if (loading === false) {
+    console.log(loadingSession)
+    if (loadingSession === false) {
       setDataSession(data.sessions)
       createSessionChart()
     }
 
-  }, [loading, data])
+  }, [loadingSession, data])
 
-  console.log('session', dataSession)
+
 
   function createSessionChart() {
+    console.log('session', dataSession)
     document.getElementById('session__chart').innerHTML = ''
 
 
@@ -82,6 +84,8 @@ function Session(props) {
       .x((d, i) => xScale(i) + 28)
       .y((d) => 220 - yScale(d))
       .curve(d3.curveMonotoneX)
+
+      console.log("Xtra session", extrasSessions)
 
     chart.append("path")
       .datum(extrasSessions)

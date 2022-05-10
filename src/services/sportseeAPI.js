@@ -118,8 +118,8 @@ load()
 export const useSportSeeAPISession = (user, source) => {
   const url = returnURL(user, source, 'url_sessions')
   const [loadingSession, setLoading] = useState(true)
-  const [data, setData] = useState([])
-  const [error, setError] = useState(undefined)
+  const [dataSession, setData] = useState([])
+  const [errorSession, setError] = useState(undefined)
 
   useEffect(() => {
     const load = async () => {
@@ -139,8 +139,8 @@ export const useSportSeeAPISession = (user, source) => {
 
   return {
     loadingSession,
-    data,
-    error
+    dataSession,
+    errorSession
   }
 }
 

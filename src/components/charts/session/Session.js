@@ -8,29 +8,34 @@ function Session(props) {
   //console.log("weight")
   const context = useContext(SrcContext)
   const source = context.dataSource
-  const { loadingSession, data, error } = useSportSeeAPISession(props.id, source)
+  const { loadingSession, dataSession, errorSession } = useSportSeeAPISession(props.id, source)
 
-  const [dataSession, setDataSession] = useState([])
+  const [durationSession, setDataSession] = useState([])
 
 
   useEffect(() => {
     console.log(loadingSession)
     if (loadingSession === false) {
-      setDataSession(data.sessions)
-      createSessionChart()
+      setDataSession(dataSession.sessions)
+
     }
 
-  }, [loadingSession, data])
+  }, [loadingSession, dataSession])
 
 
+  useEffect(() => {
+    if (durationSession.length > 0) {
+      createSessionChart()
+    }
+  }, [durationSession])
 
   function createSessionChart() {
-    console.log('session', dataSession)
+    console.log('session', durationSession)
     document.getElementById('session__chart').innerHTML = ''
 
 
     //extraction des sessions
-    const allSessions = dataSession.map(elt => elt.sessionLength)
+    const allSessions = durationSession.map(elt => elt.sessionLength)
 
     //on ajoute deux éléments : un au début et un à la fin 
     //ils seront en dehors du graphique mais permettront une ligne continue (avant j1 et après j7)
@@ -76,7 +81,7 @@ function Session(props) {
 
     // Add Y axis
     var yScale = d3.scaleLinear()
-      .domain([0, Math.max(...dataSession.map(elt => elt.sessionLength))])
+      .domain([0, Math.max(...durationSession.map(elt => elt.sessionLength))])
       .range([0, 100])
 
     //add the line
@@ -85,7 +90,7 @@ function Session(props) {
       .y((d) => 220 - yScale(d))
       .curve(d3.curveMonotoneX)
 
-      console.log("Xtra session", extrasSessions)
+    console.log("Xtra session", extrasSessions)
 
     chart.append("path")
       .datum(extrasSessions)

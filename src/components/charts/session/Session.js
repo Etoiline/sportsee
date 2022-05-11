@@ -14,7 +14,6 @@ function Session(props) {
 
 
   useEffect(() => {
-    console.log(loadingSession)
     if (loadingSession === false) {
       setDataSession(dataSession.sessions)
 
@@ -30,7 +29,6 @@ function Session(props) {
   }, [durationSession])
 
   function createSessionChart() {
-    console.log('session', durationSession)
     document.getElementById('session__chart').innerHTML = ''
 
 
@@ -90,7 +88,6 @@ function Session(props) {
       .y((d) => 220 - yScale(d))
       .curve(d3.curveMonotoneX)
 
-    console.log("Xtra session", extrasSessions)
 
     chart.append("path")
       .datum(extrasSessions)

@@ -7,9 +7,6 @@ import { returnURL } from './adresses'
 // const source = 'MOCKED'
 //const source='BACKEND'
 
-
-
-
 export const useSportseeAPI = (user,source, type) => {
   const url = returnURL(user,source, type)
   //console.log('url', url, source,type)
@@ -110,9 +107,9 @@ load()
          * @param user : user id
          * @param source : source of data (MOCKED or BACKEND)
          * 
-         * @return loading : indicates loading status
-         * @return data : array containing for each day the duration of the session
-         * @return error : indicates any errors
+         * @return loadingSession : indicates loading status
+         * @return dataSession : array containing for each day the duration of the session
+         * @return errorSession : indicates any errors
          *    
          */
 export const useSportSeeAPISession = (user, source) => {
@@ -154,9 +151,9 @@ export const useSportSeeAPISession = (user, source) => {
          * @param user : user id
          * @param source : source of data (MOCKED or BACKEND)
          * 
-         * @return loading : indicates loading status
-         * @return data : object containing id user and an array with weight and calories for the week 
-         * @return error : indicates any errors
+         * @return loadingActivity : indicates loading status
+         * @return dataActivity : object containing id user and an array with weight and calories for the week 
+         * @return errorActivity : indicates any errors
          *    
          */
  export const useSportSeeAPIActivity = (user, source) => {
@@ -185,5 +182,47 @@ export const useSportSeeAPISession = (user, source) => {
     loadingActivity,
     dataActivity,
     errorActivity
+  }
+}
+
+
+
+/**
+         * Return performance data
+         * 
+         * @param user : user id
+         * @param source : source of data (MOCKED or BACKEND)
+         * 
+         * @return loadingPerformance : indicates loading status
+         * @return dataPerformance : array containing values for each characteristic
+         * @return errorPerformance : indicates any errors
+         *    
+         */
+ export const useSportSeeAPIPerformance = (user, source) => {
+  const url = returnURL(user, source, 'url_performance')
+  const [loadingPerformance, setLoadingPerformance] = useState(true)
+  const [dataPerformance, setDataPerformance] = useState([])
+  const [errorPerformance, setErrorPerformance] = useState(undefined)
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const response = await axios.get(url)
+        let dataUser = (source === 'BACKEND') ? response.data.data : response.data
+        setDataPerformance(dataUser)
+        setLoadingPerformance(false)
+      } catch (err) {
+        setErrorPerformance(err)
+        setLoadingPerformance(false)
+      }
+    }
+    load()
+  }, [url])
+
+
+  return {
+    loadingPerformance,
+    dataPerformance,
+    errorPerformance
   }
 }

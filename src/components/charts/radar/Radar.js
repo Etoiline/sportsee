@@ -17,7 +17,7 @@ function Radar(props) {
   useEffect(() => {
     if (loadingPerformance === false) {
       setValuePerformance(dataPerformance.data)
-      console.log(dataPerformance.data)
+
     }
   }, [loadingPerformance, dataPerformance])
 
@@ -31,46 +31,16 @@ function Radar(props) {
 
 function createPerformanceChart(){
   document.getElementById('radar_chart').innerHTML = ''
-  let data = [80, 120, 140, 50, 200, 90]
-  let dataFichier = [
-    {
-      "value":80,
-      "kind":1
-    },
-    {
-      "value":120,
-      "kind":2
-    },
-    {
-      "value":140,
-      "kind":3
-    },
-    {
-      "value":50,
-      "kind":4
-    },
-    {
-      "value":200,
-      "kind":5
-    },
-    {
-      "value":90,
-      "kind":6
-    }
-  ]
 
-  let kind = {
-    "1":"cardio",
-    "2":"energy",
-    "3":"endurance",
-    "4":"strength",
-    "5":"speed",
-    "6":"intensity"
-  }
+  let values = valuePerformance.map (value => {
+    return (value.value)
+  })
+
+  
 
     // Create the scales for rank our data
     let radialScale = d3.scaleLinear()
-    .domain([0, d3.max(data) * 1.25])
+    .domain([0, d3.max(values) * 1.25])
     .range([5, 120])
   
     //coordinates of the center of the graph
@@ -78,8 +48,7 @@ function createPerformanceChart(){
     let yCenter = 140
 
 let coordinatesPolygon = []
-  dataFichier.forEach( (oneData, index) => {
-    console.log(index, oneData, oneData.value)
+valuePerformance.forEach( (oneData, index) => {
     let rayonData = radialScale(oneData.value)
     switch (index) {
       case 0 : // cardio
@@ -106,7 +75,6 @@ let coordinatesPolygon = []
 
   })
 
-  console.log(coordinatesPolygon)
 
 
 
@@ -126,9 +94,8 @@ chart.append("polygon")
 
   //create five hexagon
   for (let i = 0; i < 5; i++) {
-    let rayon = radialScale(i * (d3.max(data) * 1.25) / 5)
+    let rayon = radialScale(i * (d3.max(values) * 1.25) / 5)
     createHexagon(chart, rayon, xCenter, yCenter)
-    console.log("i", i, rayon)
   }
 
   //adding legend

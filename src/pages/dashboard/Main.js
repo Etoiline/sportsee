@@ -30,7 +30,7 @@ function Main(props) {
         <div className={main.analyze}>
           <Session id={idUser}/>
           <Radar id={idUser} />
-          <Kpi id={idUser} />
+          {!loadingMain?<Kpi score={dataMain.score} />:<></>}
         </div>
 
       </div>

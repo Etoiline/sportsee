@@ -1,7 +1,15 @@
 import * as d3 from 'd3'
 import KpiCss from './Kpi.module.css'
+import PropTypes from 'prop-types'
 
-//test comm ou pas
+/**
+ * Kpi component
+ * 
+ * @param props : user id
+ * 
+ * @return kpi component (radial chart)
+ *    
+ */
 
 function Kpi(props) {
 
@@ -9,7 +17,7 @@ function Kpi(props) {
  
   console.log(score)
 //affichage
- document.getElementById('kpi_chart').innerHTML = ''
+ //document.getElementById('kpi_chart').innerHTML = ''
  const angleScale = d3.scaleLinear()
      .domain ([0,1])
      .range([0,2*Math.PI])
@@ -97,5 +105,8 @@ function Kpi(props) {
   )
 }
 
+Kpi.propTypes = {
+  id: PropTypes.string
+}
 
 export default Kpi

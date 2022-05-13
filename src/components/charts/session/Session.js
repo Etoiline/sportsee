@@ -1,8 +1,19 @@
 import * as d3 from 'd3'
-import { useSportSeeAPISession } from '../../../services/sportseeAPI';
+import { useSportSeeAPISession } from '../../../services/sportseeAPI'
 import sessionCss from './Session.module.css'
 import { useEffect, useState, useContext } from "react"
-import { SrcContext } from '../../../services/SrcProvider';
+import { SrcContext } from '../../../services/SrcProvider'
+import PropTypes from 'prop-types'
+
+
+/**
+ * Session component
+ * 
+ * @param props : user id
+ * 
+ * @return session component (linear chart)
+ *    
+ */
 
 function Session(props) {
   //console.log("weight")
@@ -28,15 +39,20 @@ function Session(props) {
     }
   }, [durationSession])
 
+
+  /**
+   * Main function to create chart 
+   *    
+   */
   function createSessionChart() {
     document.getElementById('session__chart').innerHTML = ''
 
 
-    //extraction des sessions
+    //extract sessions
     const allSessions = durationSession.map(elt => elt.sessionLength)
 
-    //on ajoute deux éléments : un au début et un à la fin 
-    //ils seront en dehors du graphique mais permettront une ligne continue (avant j1 et après j7)
+    //add two elements (at the begginning and at the end) 
+    //there were outside the chart but will allow a continuous line (befor day 1 and after day 7)
     const prevDuration = 2 * allSessions[0] - allSessions[1]
     const nextDuration = 2 * allSessions[allSessions.length - 1] - allSessions[allSessions.length - 2]
     let extrasSessions = []
@@ -63,7 +79,7 @@ function Session(props) {
       .style('font-size', 15)
       .text('Durée moyenne des sessions')
 
-    //fonction de remplissage des abscisses
+    //horizontal axis
     const xScale = d3.scaleLinear()
       .domain([1, 7])
       .range([0, 220])
@@ -87,8 +103,6 @@ function Session(props) {
       .x((d, i) => xScale(i) + 28)
       .y((d) => 220 - yScale(d))
       .curve(d3.curveMonotoneX)
-
-
     chart.append("path")
       .datum(extrasSessions)
       .attr("class", "line")
@@ -101,7 +115,7 @@ function Session(props) {
     // Add the dot and bubbles
     for (let index = 1; index < extrasSessions.length - 1; index++) {
       let duration = extrasSessions[index]
-      let decalage = 0 //permet d'afficher la durée à droite pour la dernière valeur (sinon dépasse du cadre)
+      let decalage = 0 //used to offset the display from the last value
       if (index === extrasSessions.length - 2) {
         decalage = 50
       }
@@ -146,7 +160,7 @@ function Session(props) {
         .attr("width", 41)
         .attr("height", 300)
         .attr("opacity", "0")
-        // make it appear on hover + make the infos appears
+        // make it appear on mousehover
         .on("mouseover", function () {
           d3.selectAll(`#session${index} > *`).transition()
             .attr("opacity", "1")
@@ -158,16 +172,6 @@ function Session(props) {
             .attr("opacity", "0")
         })
     }
-    // chart.append('g')
-    // .attr("class", "linear_dots")
-    //     .selectAll("dot")
-    //     .data(extrasSessions)
-    //     .enter()
-    //     .append("circle")
-    //     .attr("cx",  (d,i) => xScale(i)+28 )
-    //     .attr("cy", (d) =>  220-yScale(d) )
-    //     .attr("r", 2)
-    //     .style("fill", "#000")
 
 
 
@@ -178,10 +182,12 @@ function Session(props) {
       <div id="session__chart">
 
       </div>
-
     </div>
   )
 }
 
+Session.propTypes = {
+  id : PropTypes.string
+}
 
 export default Session;

@@ -3,56 +3,6 @@ import { useEffect, useState } from "react"
 import { returnURL } from './adresses'
 
 
-///////////////Créer un hokk par composant////////////////
-// const source = 'MOCKED'
-//const source='BACKEND'
-
-export const useSportseeAPI = (user,source, type) => {
-  const url = returnURL(user,source, type)
-  //console.log('url', url, source,type)
-  const [loading, setLoading] = useState(true)
-  const [data, setData] = useState([]) 
-  const [error, setError] = useState(undefined)
-  //console.log('load async')
-
-useEffect(()=> {
-  //console.log('useeffect')
-  const load = async () => {
-    try {
-      //console.log('asdert')
-      const response = await axios.get(url)
-      //console.log('reponse', response)
-      //const dataUser = await response.json()
-      //new Promise((r) => setTimeout(r, 4000))
-      let dataUser
-      if(source==='BACKEND'){
-        dataUser = response.data.data
-      }
-      else {
-        dataUser = response.data
-      }
-      //console.log('dataqqq',dataUser)
-      setData(dataUser)
-      setLoading(false)
-    } catch (err) {
-      //console.log('error', err)
-      setError(err)
-      setLoading(false)
-    }
-  }
-load()
-}, [url])
-
-
-  return {
-    loading,
-    data,
-    error
-  }
-}
-
-
-
 /**
          * Return main user data
          * 
@@ -224,5 +174,44 @@ export const useSportSeeAPISession = (user, source) => {
     loadingPerformance,
     dataPerformance,
     errorPerformance
+  }
+}
+
+
+/**
+         * Return error, simulates problem on the server (not responding, not starting)
+         * Here we set a wrong port (3008)
+         * 
+         * @return loadingMainError : indicates loading status
+         * @return dataMainError : object containing id user, keyData object (macros data), user score and user info 
+         * @return errorMainError : indicates any errors
+         *    
+         */
+ export const useSportSeeAPIMainError = () => {
+  const url = 'http://localhost:3008/user'
+  const [loadingMainError, setLoadingError] = useState(true)
+  const [dataMainError, setDataError] = useState([])
+  const [errorMainError, setErrorError] = useState(undefined)
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const response = await axios.get(url)
+        let dataUser =  response.data.data 
+        setDataError(dataUser)
+        setLoadingError(false)
+      } catch (err) {
+        setErrorError(err)
+        setLoadingError(false)
+      }
+    }
+    load()
+  }, [url])
+
+
+  return {
+    loadingMainError,
+    dataMainError,
+    errorMainError
   }
 }

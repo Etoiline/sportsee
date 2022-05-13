@@ -15,6 +15,16 @@ const URL_MOCKED = {
   url_performance : '/performance.json'
 }
 
+/**
+         * Return url accordind to data source (backend or mocked)
+         * 
+         * @param userId : user id
+         * @param source : source of data (MOCKED or BACKEND)
+         * @param type : type of ressource requested
+         * 
+         * @return url : full url requested
+         *    
+         */
 export function returnURL(userID, source, type) {
   if (source==='BACKEND'){
     var url = URL_BACKEND['url']+userID+URL_BACKEND[type]

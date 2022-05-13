@@ -4,9 +4,7 @@ import carbsIcon from '../../assets/carbs-icon.png'
 import fatIcon from '../../assets/fat-icon.png'
 import proteinIcon from '../../assets/protein-icon.png'
 import colMacros from './Macros.module.css'
-import { useSportSeeAPIMain } from "../../services/sportseeAPI"
-import { useEffect, useState, useContext } from "react"
-import { SrcContext } from '../../services/SrcProvider'
+import PropTypes from 'prop-types'
 
 const VALUE_BY_KEY = {
   calorieCount: 'Calories',
@@ -30,6 +28,14 @@ const ICON_BY_TYPE = {
 };
 
 
+  /**
+   * Macros component
+   * 
+   * @param props : array containing data macro
+   * 
+   * @return many macroElement component
+   *    
+   */
 function Macros(props) {
 
 
@@ -49,5 +55,14 @@ function Macros(props) {
   )
 }
 
+Macros.propTypes = {
+  dataMacro : PropTypes.object
+}
 
+// Macros.propTypes = {
+//   dataMacro : PropTypes.shape({
+//     PropTypes.string,
+//     PropTypes.number
+//   })
+// }
 export default Macros

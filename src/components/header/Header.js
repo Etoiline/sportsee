@@ -1,7 +1,14 @@
 import header from './Header.module.css'
 import propTypes from 'prop-types'
 
-
+/**
+         * Header component
+         * 
+         * @param props : user id
+         * 
+         * @return header component
+         *    
+         */
 function Header(props) {
   
     return (
@@ -13,7 +20,7 @@ function Header(props) {
   }
 
   Header.propTypes = {
-    id : propTypes.number,
+    id : propTypes.string
   }
 
 export default Header

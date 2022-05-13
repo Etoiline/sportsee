@@ -11,7 +11,7 @@ import { useContext } from 'react'
 import { SrcContext } from '../../services/SrcProvider'
 
 
-function Main(props) {
+function Main() {
   const { idUser } = useParams()
   const context = useContext(SrcContext)
   const source = context.dataSource

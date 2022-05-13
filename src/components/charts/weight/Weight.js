@@ -1,90 +1,109 @@
 import * as d3 from 'd3'
-import { useSportSeeAPIActivity } from '../../../services/sportseeAPI';
-import  './Weight.css'
+import { useSportSeeAPIActivity } from '../../../services/sportseeAPI'
+import './Weight.css'
 import { useEffect, useState, useContext } from "react"
-import { SrcContext } from '../../../services/SrcProvider';
+import { SrcContext } from '../../../services/SrcProvider'
+import PropTypes from 'prop-types'
+
+/**
+ * Weight chart component
+ * 
+ * @param props : user id
+ * 
+ * @return weight chart component
+ *    
+ */
 
 function Weight(props) {
   //console.log("weight")
   const context = useContext(SrcContext)
   const source = context.dataSource
-  const {loadingActivity, dataActivity, errorActivity} = useSportSeeAPIActivity(props.id, source)
+  const { loadingActivity, dataActivity, errorActivity } = useSportSeeAPIActivity(props.id, source)
 
-  const [datasetCalories, setDatasetCalories] = useState([])
+  const [datasetCalories, setDatasetCalories] = useState([]) //set containing calories values
+  const [datasetWeight, setDatasetWeight] = useState([]) //set containing weight values
 
-  const [datasetWeight, setDatasetWeight]= useState([])
-
-  useEffect(()=> {
-    if(loadingActivity===false){
-      setDatasetWeight(dataActivity.sessions.map (dataWeight => {
+  useEffect(() => {
+    if (loadingActivity === false) {
+      setDatasetWeight(dataActivity.sessions.map(dataWeight => {
         return (dataWeight.kilogram)
       }))
-      setDatasetCalories(dataActivity.sessions.map (dataCalories => {
+      setDatasetCalories(dataActivity.sessions.map(dataCalories => {
         return (dataCalories.calories)
       }))
     }
-    
-  },[loadingActivity, dataActivity] ) 
 
-  useEffect(()=> {
-    if (datasetCalories.length>0 && datasetWeight.length>0){
+  }, [loadingActivity, dataActivity])
+
+  useEffect(() => {
+    if (datasetCalories.length > 0 && datasetWeight.length > 0) {
       createChart()
     }
-  },[datasetCalories, datasetWeight] ) 
+  }, [datasetCalories, datasetWeight])
 
 
 
-
-  function createWeightBars(chart, minoration, majoration){
+  /**
+           * Function creating weight bars 
+           * 
+           * @param chart : main chart
+           * @param minoration : index inf to calculate scale
+           * @param majoration : index sup to calculate scale
+           * 
+           *    
+           */
+  function createWeightBars(chart, minoration, majoration) {
     //tooltip
-    d3.select("body").append("div")
-    .attr("class", "chart-tooltip")         
-    .style("opacity", 0);
+    // d3.select("body").append("div")
+    // .attr("class", "chart-tooltip")         
+    // .style("opacity", 0);
 
-    //fonction de remplissage des ordonnées
-    // La largeur de la barre est déterminée par l'attribut width
-    // La hauteur par l'attribut height calculé avec la fonction de mise à l'échelle
     const yScale = d3.scaleLinear()
-     .domain ([d3.min(datasetWeight)*minoration,d3.max(datasetWeight)*majoration])
-     .range([0,200])
+      .domain([d3.min(datasetWeight) * minoration, d3.max(datasetWeight) * majoration])
+      .range([0, 200])
 
     var weightBars = chart.append('g')
-    .attr('id', 'weightBars');
+      .attr('id', 'weightBars');
     weightBars.selectAll(".bar")
-    .data(datasetWeight)
-    .enter().append("line")
-    .attr("class", "bar")
-    .attr("id", (d,i)=>"jour"+i)
-    .attr('x1', (d,i) => i*112+20)
-    .attr("y2", (d) => 250-yScale(d))
-    .attr("y1", (d,i) => 250)
-    .attr("x2", (d,i) => i*112+20)
-    .style("stroke", "#282D30")          // colour the line
-    .style("stroke-width", 8)         // adjust line width
-    .style("stroke-linecap", "round")  // stroke-linecap type
-    .append('div')
+      .data(datasetWeight)
+      .enter().append("line")
+      .attr("class", "bar")
+      .attr("id", (d, i) => "jour" + i)
+      .attr('x1', (d, i) => i * 112 + 20)
+      .attr("y2", (d) => 250 - yScale(d))
+      .attr("y1", (d, i) => 250)
+      .attr("x2", (d, i) => i * 112 + 20)
+      .style("stroke", "#282D30")          // colour the line
+      .style("stroke-width", 8)         // adjust line width
+      .style("stroke-linecap", "round")  // stroke-linecap type
+      .append('div')
   }
 
+  /**
+   * Function creating calories bars 
+   * 
+   * @param chart : main chart
+   * @param minoration : index inf to calculate scale
+   * @param majoration : index sup to calculate scale
+   * 
+   *    
+   */
+  function createCaloriesBars(chart, minoration, majoration) {
 
-  function createCaloriesBars(chart, minoration, majoration){
-    
-    //fonction de remplissage des ordonnées
-    // La largeur de la barre est déterminée par l'attribut width
-    // La hauteur par l'attribut height calculé avec la fonction de mise à l'échelle
     const yScale = d3.scaleLinear()
-    .domain ([d3.min(datasetCalories)*(minoration-0.08),d3.max(datasetCalories)*(majoration+0.08)])
-     .range([0,200])
+      .domain([d3.min(datasetCalories) * (minoration - 0.08), d3.max(datasetCalories) * (majoration + 0.08)])
+      .range([0, 200])
 
     var caloriesBars = chart.append('g')
-    .attr('id', 'caloriesBars');
+      .attr('id', 'caloriesBars');
     caloriesBars.selectAll(".bar")
-    .data(datasetCalories)
-    .enter().append("rect")
-    .attr("class", "bar")
-    .attr('x', (d,i) => i*112+34)
-    .attr("width", 8)
-    .attr("y", (d,i) => 250-yScale(d))
-    .attr("height", (d) => yScale(d))		
+      .data(datasetCalories)
+      .enter().append("rect")
+      .attr("class", "bar")
+      .attr('x', (d, i) => i * 112 + 34)
+      .attr("width", 8)
+      .attr("y", (d, i) => 250 - yScale(d))
+      .attr("height", (d) => yScale(d))
 
 
   }
@@ -105,16 +124,20 @@ function Weight(props) {
   // }
 
 
-
-  function displayTooltip (chart) {
-    // Display tooltip on mouseover
-   datasetCalories.map((calory, index) => { 
-    let group = chart.append("g")
+  /**
+           * Function displaying tooltip on mousehover 
+           * 
+           * @param chart : main chart
+           *    
+           */
+  function manageTooltip(chart) {
+    datasetCalories.map((calory, index) => {
+      let group = chart.append("g")
         .attr("id", "day" + index)
         .attr("class", "d3")
-    // create gray reactangle on mouseover
-    group.append("svg:rect")
-        .attr("x", index*110)
+      // create gray reactangle on mouseover
+      group.append("svg:rect")
+        .attr("x", index * 110)
         .attr("y", 55)
         .attr("width", 80)
         .attr("height", 195)
@@ -122,141 +145,136 @@ function Weight(props) {
         .attr("opacity", "0")
         // events
         .on("mouseover", function () {
-            d3.selectAll(`#day${index} > text`).transition()
-                .attr("opacity", "1")
-                .attr("class", "d3 text-white-500 fill-current")
-            d3.selectAll(`#day${index} > .rectRed`).transition()
-                .attr("opacity", "1")
-            d3.select(this).transition()
-                .duration("150")
-                .attr("opacity", ".2")
+          d3.selectAll(`#day${index} > text`).transition()
+            .attr("opacity", "1")
+            .attr("class", "d3 text-white-500 fill-current")
+          d3.selectAll(`#day${index} > .rectRed`).transition()
+            .attr("opacity", "1")
+          d3.select(this).transition()
+            .duration("150")
+            .attr("opacity", ".2")
         })
         .on("mouseout", function () {
-            d3.select(this).transition()
-                .duration("150")
-                .attr("opacity", "0")
-            d3.selectAll(`#day${index} > *`).transition()
-                .attr("opacity", "0")
+          d3.select(this).transition()
+            .duration("150")
+            .attr("opacity", "0")
+          d3.selectAll(`#day${index} > *`).transition()
+            .attr("opacity", "0")
         })
-    // infos bubble : red rect + calories + weight
-    group.append("svg:rect")
-        .attr("x", 100+index*110)
+      // infos bubble : red rect + calories + weight
+      group.append("svg:rect")
+        .attr("x", 100 + index * 110)
         .attr("y", 6)
         .attr("width", 70)
         .attr("height", 95)
         .attr("fill", "#E60000")
         .attr("class", "rectRed")
         .attr("opacity", "0")
-    group.append("svg:text")
-        .attr("x", 110+index*110)
+      group.append("svg:text")
+        .attr("x", 110 + index * 110)
         .attr("y", 35)
         .attr("fill", "white")
-        .text(datasetWeight[index] + "Kg")  
+        .text(datasetWeight[index] + "Kg")
         .attr("opacity", "0")
-    group.append("svg:text")
-        .attr("x", 105+index*110)
+      group.append("svg:text")
+        .attr("x", 105 + index * 110)
         .attr("y", 85)
         .attr("fill", "white")
-        .text(calory + "Kcal")      
+        .text(calory + "Kcal")
         .attr("opacity", "0")
-})
+    })
 
 
   }
 
 
+  /**
+   * Main function to create chart 
+   *    
+   */
+  function createChart() {
 
-    function createChart(){
-      //console.log(datasetCalories)
+    //solve the problem of double display
+    document.getElementById('histogram__chart').innerHTML = ''
 
-      //Problème du graphique qui s'affichait 2 fois
-      document.getElementById('histogram__chart').innerHTML=''
+    //indices to calculate scales
+    const minoration = 0.98
+    const majoration = 1.02
 
-      const minoration = 0.98
-      const majoration = 1.02
-
-      //Creation du container chart
-      let chart = d3.select("#histogram__chart")
+    //Main container
+    let chart = d3.select("#histogram__chart")
       .append("svg")
-     .attr('class', 'svg_chart')
+      .attr('class', 'svg_chart')
 
 
-    //textes des ordonnées
+    //ordinate texts with weight scale values
     chart.append("svg:text")
-            .attr("x", 780)
-            .attr("y", 150)
-            .attr("class", "coordY")
-            .attr("fill", "#9B9EAC")
-            .text(Math.round((d3.min(datasetWeight)*minoration + d3.max(datasetWeight)*majoration) / 2))
-    chart.append("svg:text")
-            .attr("x", 780)
-            .attr("y", 50)
-            .attr("class", "coordY")
-            .attr("fill", "#9B9EAC")
-            .text(Math.round(d3.max(datasetWeight)*majoration))
-    chart.append("svg:text")
-            .attr("x", 780)
-            .attr("y", 250)
-            .attr("class", "coordY")
-            .attr("fill", "#9B9EAC")
-            .text(Math.round(d3.min(datasetWeight)*minoration))
-    
-    //lignes horizontales
-    chart.append("line")
-            .attr("x1", 20)
-            .attr("y1", 50)
-            .attr("x2", 720)
-            .attr("y2", 50)               
-            .attr("stroke", "#DEDEDE")
-            .attr("stroke-dasharray", "4")
-    chart.append("line")
-            .attr("x1", 20)
-            .attr("y1", 150)
-            .attr("x2", 720)
-            .attr("y2", 150)               
-            .attr("stroke", "#DEDEDE")
-            .attr("stroke-dasharray", "4")
-    chart.append("line")
-            .attr("x1", 20)
-            .attr("y1", 250)
-            .attr("x2", 720)
-            .attr("y2", 250)               
-            .attr("stroke", "#DEDEDE")
-
-
-    //fonction de remplissage des abscisses
-    const xScale = d3.scaleLinear()
-    .domain([1,7])
-    .range([0, 670])
-    for (let i =1;i<8;i++){
-      chart.append("svg:text")
-      .attr("x", xScale(i)+30)
-      .attr("y", 280)
-      .attr("class", "coordX")
+      .attr("x", 780)
+      .attr("y", 150)
+      .attr("class", "coordY")
       .attr("fill", "#9B9EAC")
-      .text(i)
+      .text(Math.round((d3.min(datasetWeight) * minoration + d3.max(datasetWeight) * majoration) / 2))
+    chart.append("svg:text")
+      .attr("x", 780)
+      .attr("y", 50)
+      .attr("class", "coordY")
+      .attr("fill", "#9B9EAC")
+      .text(Math.round(d3.max(datasetWeight) * majoration))
+    chart.append("svg:text")
+      .attr("x", 780)
+      .attr("y", 250)
+      .attr("class", "coordY")
+      .attr("fill", "#9B9EAC")
+      .text(Math.round(d3.min(datasetWeight) * minoration))
+
+    //3 horizontal lines
+    chart.append("line")
+      .attr("x1", 20)
+      .attr("y1", 50)
+      .attr("x2", 720)
+      .attr("y2", 50)
+      .attr("stroke", "#DEDEDE")
+      .attr("stroke-dasharray", "4")
+    chart.append("line")
+      .attr("x1", 20)
+      .attr("y1", 150)
+      .attr("x2", 720)
+      .attr("y2", 150)
+      .attr("stroke", "#DEDEDE")
+      .attr("stroke-dasharray", "4")
+    chart.append("line")
+      .attr("x1", 20)
+      .attr("y1", 250)
+      .attr("x2", 720)
+      .attr("y2", 250)
+      .attr("stroke", "#DEDEDE")
+
+
+    //abscissa coordinates
+    const xScale = d3.scaleLinear()
+      .domain([1, 7])
+      .range([0, 670])
+    for (let i = 1; i < 8; i++) {
+      chart.append("svg:text")
+        .attr("x", xScale(i) + 30)
+        .attr("y", 280)
+        .attr("class", "coordX")
+        .attr("fill", "#9B9EAC")
+        .text(i)
+    }
+
+
+
+    // Adding bars to the chart
+    createWeightBars(chart, minoration, majoration)
+    createCaloriesBars(chart, minoration, majoration)
+
+    //Adding tooltips
+    manageTooltip(chart)
+
+
+
   }
-
-
-
-      // Ajout des bars en utilisant les données
-     createWeightBars(chart, minoration, majoration)
-     createCaloriesBars(chart, minoration, majoration)
-     
-     //remplissage des tooltips
-     //setTooltip()
-     displayTooltip(chart)
-     
-
-
-   
-
-
-
-		
-
-
-}
 
   return (
     <div id='histogram'>
@@ -274,6 +292,9 @@ function Weight(props) {
     </div>
   )
 }
-//}
+
+Weight.propTypes = {
+  id : PropTypes.string
+}
 
 export default Weight;

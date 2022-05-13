@@ -1,4 +1,17 @@
 import macroElement from './MacroElement.module.css'
+import PropTypes from 'prop-types'
+
+/**
+ * Macro Element component
+ * 
+ * @param props.elementIcon : url of icon
+ * @param props.elementName : name of macro element
+ * @param props.elementValue : value of macro element
+ * @param props.elementUnit : unit of macro element
+ * 
+ * @return macro element component
+ *    
+ */
 
 function MacroElement(props) {
   //console.log('Ici MacroElement',props.elementName )
@@ -15,6 +28,14 @@ function MacroElement(props) {
     </div>
       
   )
+}
+
+MacroElement.propTypes = {
+  key : PropTypes.number,
+  elementName : PropTypes.string,
+  elementValue : PropTypes.number,
+  elementUnit : PropTypes.string,
+  elementIcon : PropTypes.string
 }
 
 export default MacroElement

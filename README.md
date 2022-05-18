@@ -13,8 +13,12 @@ To run backend follow [this link](https://github.com/OpenClassrooms-Student-Cent
 ### Frontend
 
 To choose your data source, open ./scr/services/SrcProvider.js . Then change "value" : 
-BACKEND for server data
-MOCKED for mocked data
+- BACKEND for server data
+- MOCKED for mocked data
+
+Then, in the project directory you can run by using `npm start`
+
+
 
 ## Available Scripts
 

@@ -1,6 +1,20 @@
-# Getting Started with Create React App
+# Project 12 - Sportsee - frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was made with [Create React App](https://github.com/facebook/create-react-app).
+
+## Start project
+
+You have to start the two part of application : first backend part, then frontend part.
+
+### Backend
+
+To run backend follow [this link](https://github.com/OpenClassrooms-Student-Center/P9-front-end-dashboard/blob/master/README.md)
+
+### Frontend
+
+To choose your data source, open ./scr/services/SrcProvider.js . Then change "value" : 
+BACKEND for server data
+MOCKED for mocked data
 
 ## Available Scripts
 
@@ -9,7 +23,7 @@ In the project directory, you can run:
 ### `npm start`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Open [http://localhost:3001](http://localhost:3001) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.

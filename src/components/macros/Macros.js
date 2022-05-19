@@ -38,13 +38,13 @@ const ICON_BY_TYPE = {
    */
 function Macros(props) {
 
-
+console.log(props.dataMacro)
 
   return (
     <div className={colMacros.macros}>
-      {Object.entries(props.dataMacro).map(([key, value]) => (
+      {Object.entries(props.dataMacro).map(([key, value], index) => (
         <MacroElement
-          key={key}
+          key={index}
           elementName={VALUE_BY_KEY[key]}
           elementValue={value}
           elementUnit={UNIT_BY_TYPE[key]}

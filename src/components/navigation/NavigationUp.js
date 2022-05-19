@@ -1,10 +1,11 @@
 import logo from '../../assets/logo.png'
 import navigationUp from './NavigationUp.module.css'
+import { Link } from 'react-router-dom'
 
 function NavigationUp() {
   return (
     <div className={navigationUp.main}>
-      <img className={navigationUp.logo} src={logo} alt='sportsee'/>
+      <Link to={'./'}><img className={navigationUp.logo} src={logo} alt='sportsee'/></Link>
       <div className={navigationUp.menu}>
         <ul>
           <li>Accueil</li>

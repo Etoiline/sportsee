@@ -18,7 +18,7 @@ root.render(
       <Route path="/" element={<Template />}>
         <Route index element={<App />} />
         <Route path="/user/:idUser" element={<Main /> }/>
-        <Route path="/500" element={<Error /> }/>
+        <Route path="*" element={<Error /> }/>
         {/* <Route path="/user/mock/:idUser" element={<Main />} /> */}
       </Route>
       </Routes>

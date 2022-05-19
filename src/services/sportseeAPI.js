@@ -4,16 +4,16 @@ import { returnURL } from './adresses'
 
 
 /**
-         * Return main user data
-         * 
-         * @param user : user id
-         * @param source : source of data (MOCKED or BACKEND)
-         * 
-         * @return loadingMain : indicates loading status
-         * @return dataMain : object containing id user, keyData object (macros data), user score and user info 
-         * @return errorMain : indicates any errors
-         *    
-         */
+ * Return main user data
+ * 
+ * @param user : user id
+ * @param source : source of data (MOCKED or BACKEND)
+ * 
+ * @return loadingMain : indicates loading status
+ * @return dataMain : object containing id user, keyData object (macros data), user score and user info 
+ * @return errorMain : indicates any errors
+ *    
+ */
  export const useSportSeeAPIMain = (user, source) => {
   const url = returnURL(user, source, 'url_user')
   const [loadingMain, setLoading] = useState(true)

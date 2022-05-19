@@ -66,17 +66,16 @@ function Weight(props) {
       .attr('id', 'weightBars');
     weightBars.selectAll(".bar")
       .data(datasetWeight)
-      .enter().append("line")
+      .enter().append("rect")
       .attr("class", "bar")
       .attr("id", (d, i) => "jour" + i)
-      .attr('x1', (d, i) => i * 112 + 20)
-      .attr("y2", (d) => 250 - yScale(d))
-      .attr("y1", (d, i) => 250)
-      .attr("x2", (d, i) => i * 112 + 20)
+      .attr('x', (d, i) => i * 112 + 20)
+      .attr("y", (d, i) => 250 - yScale(d))
+      .attr("height", (d) => yScale(d))
+      .attr("width", 8)
       .style("stroke", "#282D30")          // colour the line
-      .style("stroke-width", 8)         // adjust line width
-      .style("stroke-linecap", "round")  // stroke-linecap type
-      .append('div')
+      .attr("rx",3)
+      .attr("ry",3)
   }
 
   /**
@@ -104,6 +103,8 @@ function Weight(props) {
       .attr("width", 8)
       .attr("y", (d, i) => 250 - yScale(d))
       .attr("height", (d) => yScale(d))
+      .attr("rx",3)
+      .attr("ry",3)
 
 
   }

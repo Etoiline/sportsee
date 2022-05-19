@@ -31,7 +31,6 @@ function MacroElement(props) {
 }
 
 MacroElement.propTypes = {
-  key : PropTypes.number,
   elementName : PropTypes.string,
   elementValue : PropTypes.number,
   elementUnit : PropTypes.string,

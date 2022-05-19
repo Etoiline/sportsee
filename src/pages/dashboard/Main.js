@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom'
 import main from './Main.module.css'
 import { useContext } from 'react'
 import { SrcContext } from '../../services/SrcProvider'
+import Error from '../error/Error'
 
 
 function Main() {
@@ -20,7 +21,7 @@ function Main() {
   const ShowData = () => {
     if(errorMain){
       console.log(errorMain)
-    return <div>ERREUR</div>
+    return <Error />
   }
   else return (<div className={main.main}>
     {!loadingMain?<Header name={dataMain.userInfos.firstName} />:<></>}
@@ -30,7 +31,7 @@ function Main() {
         <div className={main.analyze}>
           <Session id={idUser}/>
           <Radar id={idUser} />
-          {!loadingMain?<Kpi score={dataMain.score} />:<></>}
+          {!loadingMain?<Kpi score={dataMain.score||dataMain.todayScore} />:<></>}
         </div>
 
       </div>

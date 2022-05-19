@@ -9,9 +9,9 @@ function Error() {
 
   const ShowData = () => {
     if (errorMainError) {
-      console.log(errorMainError)
-      return <div ><h1>OOOOOPS - 500</h1>
-        <h2>Internal Server Error</h2></div>
+      //console.log(errorMainError)
+      return <div ><h1>OOOOOPS</h1>
+        <h2>Error</h2></div>
     }
     else return (<div >
       {!loadingMainError ? <Header name={dataMainError.userInfos.firstName} /> : <></>}

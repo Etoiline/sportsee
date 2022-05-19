@@ -1,6 +1,7 @@
 import * as d3 from 'd3'
 import KpiCss from './Kpi.module.css'
 import PropTypes from 'prop-types'
+import { useEffect } from 'react'
 
 /**
  * Kpi component
@@ -13,11 +14,11 @@ import PropTypes from 'prop-types'
 
 function Kpi(props) {
 
-  const score = props.score
- 
-  console.log(score)
-//affichage
- //document.getElementById('kpi_chart').innerHTML = ''
+
+console.log("score",props.score)
+
+useEffect(() => {
+ document.getElementById('kpi_chart').innerHTML = ''
  const angleScale = d3.scaleLinear()
      .domain ([0,1])
      .range([0,2*Math.PI])
@@ -48,14 +49,16 @@ function Kpi(props) {
             .innerRadius(70)
             .outerRadius(78)
             .startAngle(0)
-            .endAngle(angleScale(score));
+            .endAngle(angleScale(props.score))
+            .cornerRadius(5)
   
         grp.append("path")
             .attr("class", "arc")
             .attr("d", arc)
-            .attr("fill","green")
-            .attr("stroke", "green")
+            .attr("fill","#FB0000")
+            .attr("stroke", "#FB0000")
             .attr("stroke-linecap", "round") 
+            .attr("stroke-linejoin", "round")
 
   
         grp.append("circle")
@@ -66,7 +69,7 @@ function Kpi(props) {
             .attr("fill", "white")
 
     
-      //adding legend
+      //adding legend inside chart
       chart.append('text')
       .attr('x', 135)
       .attr('y', 120)
@@ -75,7 +78,7 @@ function Kpi(props) {
       .style('font-family', 'Roboto')
       .style('font-weight', '700')
       .style('font-size', 26)
-      .text(score*100+" %")
+      .text(props.score*100+" %")
 
       chart.append('text')
       .attr('x', 135)
@@ -94,6 +97,8 @@ function Kpi(props) {
       .style('font-family', 'Roboto')
       .style('font-size', 16)
       .text('objectif')
+    }, [props.score])
+
 
   return (
     <div className={KpiCss.main}>

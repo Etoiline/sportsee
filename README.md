@@ -4,7 +4,7 @@ This project was made with [Create React App](https://github.com/facebook/create
 
 ## Start project
 
-You have to start the two part of application : first backend part, then frontend part.
+You have to start the two part of application : ***first backend part, then frontend part***.
 
 ### Backend
 
@@ -16,7 +16,9 @@ To choose your data source, open ./scr/services/SrcProvider.js . Then change "va
 - BACKEND for server data
 - MOCKED for mocked data
 
-Then, in the project directory you can run by using `npm start`
+Then, in the project directory you can run by using `npm start`.
+At this point a message indicates that something is already running on port 3000. 
+`Would you like to run the app on another port instead?` select `Y`
 
 
 

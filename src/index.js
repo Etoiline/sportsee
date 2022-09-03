@@ -13,7 +13,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <SrcProvider>
-    <Router>
+    <Router basename='/LauraCasteran_12_13042022' >
       <Routes>
       <Route path="/" element={<Template />}>
         <Route index element={<App />} />

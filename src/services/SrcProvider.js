@@ -14,7 +14,7 @@ function SrcProvider (props) {
        * BACKEND = server data
        * MOCKED = mocked data
        */
-      <SrcContext.Provider value={{dataSource:'BACKEND'}}>
+      <SrcContext.Provider value={{dataSource:'MOCKED'}}>
         {props.children}
       </SrcContext.Provider>
     );

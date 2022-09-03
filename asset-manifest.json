@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/LauraCasteran_12_13042022/static/css/main.d7a2adae.css",
+    "main.js": "/LauraCasteran_12_13042022/static/js/main.95c79357.js",
+    "static/media/logo.png": "/LauraCasteran_12_13042022/static/media/logo.b9d8c81dad799e6cbe4c.png",
+    "index.html": "/LauraCasteran_12_13042022/index.html",
+    "main.d7a2adae.css.map": "/LauraCasteran_12_13042022/static/css/main.d7a2adae.css.map",
+    "main.95c79357.js.map": "/LauraCasteran_12_13042022/static/js/main.95c79357.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d7a2adae.css",
+    "static/js/main.95c79357.js"
+  ]
+}
